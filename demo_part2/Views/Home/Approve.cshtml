@@ -109,6 +109,7 @@
                     @using (Html.BeginForm("RejectClaim", "Claims", FormMethod.Post))
                     {
                         @Html.Hidden("id", claim.UserId)
+                        //button for rejection
                         <button type="submit" class="btn btn-danger">Reject</button>
                     }
                 </td>
