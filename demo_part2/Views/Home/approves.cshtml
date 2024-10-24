@@ -1,0 +1,57 @@
+﻿@model List<demo_part2.Models.approve>
+
+<h2>Approve Claims</h2>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Email</th>
+            <th>Module</th>
+            <th>User ID</th>
+            <th>Hours Worked</th>
+            <th>Hour Rate</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.Email</td>
+                    <td>@claim.Module</td>
+                    <td>@claim.UserId</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>@claim.HourRate</td>
+                    <td>@claim.TotalAmount</td>
+                    <td>@claim.Status</td>
+                    <td>
+                        @using (Html.BeginForm("ApproveClaim", "Home", FormMethod.Post))
+                        {
+                            @Html.Hidden("userId", claim.UserId)
+                            <button type="submit" class="btn btn-success">Approve</button>
+                        }
+                        @using (Html.BeginForm("RejectClaim", "Home", FormMethod.Post))
+                        {
+                            @Html.Hidden("userId", claim.UserId)
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" style="text-align:center;">No claims to approve.</td>
+            </tr>
+        }
+    </tbody>
+</table>
